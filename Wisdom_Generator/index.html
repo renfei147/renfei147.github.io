@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8" />
+        <title>Wisdom Generator</title>
+        <style>
+            html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                display: table;
+            }
+            #text {
+                display: table-cell;
+                word-break:break-all;
+                vertical-align:middle;
+                text-align: center;
+                font-family:"Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+                font-size:5em;
+                color:#0099FF;
+            }
+        </style>
+        <script>
+            function getrnd(array){
+                return array[Math.floor(Math.random()*array.length)]; 
+            }
+            function genword() {
+                var nonpro=["我","自我","本我","真我","你","他","她","它","他们","别人","天空","土地","世界","宇宙","意志力","思维","智慧","想法","时间",
+                            "空间","时空","混沌","幻觉","根源","本质","真实","虚拟","虚无","虚空","真空","道路","生活","生命","内心","外在","客观","主观",
+                            "灵魂","宿命","使命","缥缈","乾坤","天地","万物","漩涡"];
+                var adv=["","","","","","","","不","从不","似乎","也许","真的","可能","不可能","可以","不可以","现在","过去","曾经","将来","将","永远","总是",
+                         "已经","早已"];
+                var tadv=["","在","会","再"];
+                var vi=["上升","螺旋上升","下降","螺旋下降","旋转","沉思","思考","流逝","消失","消逝","隐去","改变","离开","回来","灰飞烟灭","终结","开始"];
+                var vt=["做","如同","像","飞跃","仰望","俯视","思考","生成","导致","构造","隐去","抹去","消灭","清除","聆听","隔绝","改变","交流","触及","怀念",
+                        "替代","代替","补偿","偿还","面临","战胜","畏惧","害怕"];
+                var aux=["被","使","让","把"];
+                var rnd=Math.floor(Math.random()*4);
+                if(rnd==0) return getrnd(nonpro)+getrnd(adv)+getrnd(tadv)+getrnd(vt)+getrnd(nonpro);
+                if(rnd==1) return getrnd(nonpro)+getrnd(adv)+getrnd(tadv)+getrnd(vi);
+                if(rnd==2) return getrnd(nonpro)+getrnd(adv)+"是"+getrnd(nonpro);
+                if(rnd==3) return getrnd(nonpro)+getrnd(adv)+getrnd(tadv)+getrnd(aux)+getrnd(nonpro)+getrnd(vt);
+            }
+            function show() {
+                text.style.opacity = 0;
+                text.innerHTML = genword();
+                var id = setInterval(function() {
+                    var opacity = parseFloat(text.style.opacity);
+                    if (opacity >= 1) {
+                        clearInterval(id);
+                    } else {
+                        text.style.opacity = opacity + 0.01;
+                    }
+                }, 10)
+            }
+            function change() {
+                text.style.opacity = 1;
+                var id = setInterval(function() {
+                    var opacity = parseFloat(text.style.opacity);
+                    if (opacity <= 0) {
+                        clearInterval(id);
+                        show();
+                    } else {
+                        text.style.opacity = opacity - 0.01;
+                    }
+                }, 10)
+            }
+        </script>
+    </head>
+    <body>
+        <div id="text"></div>
+        <script>
+            var text = document.getElementById("text");
+            setInterval(change, 5000);
+            show();
+        </script>
+    </body>
+
+</html>
